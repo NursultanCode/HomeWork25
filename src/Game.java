@@ -58,7 +58,7 @@ public class Game {
             Scanner scanner = new Scanner(System.in);
             String a = scanner.next();
             int n = Integer.parseInt(a);
-            if (n<1 || n>2) throw new Exception("Incorrect input!");
+            if (n < 1 || n > 2) throw new Exception("Incorrect input!");
             askChoice(n);
         }catch (ExceptionInInitializerError | Exception e){
             System.out.println(e.getMessage());
@@ -69,6 +69,7 @@ public class Game {
 
     private void askChoice(int i) {
         try {
+            if (counter.getCount() >= 5) throw new EndGameException();
             int max;
             if (i == 1){
                 max = 3;
@@ -85,7 +86,28 @@ public class Game {
             if (n<1 || n>max) throw new Exception("Incorrect input!");
             player = new Player(n);
             computer = new Computer(max);
+            if (player.choice == computer.choice){
+                counter.setDraw(counter.getDraw()+1);
+                counter.setCount(counter.getCount()+1);
+                System.out.println("It's Draw");
+            }else{
+                boolean win = getWinner(player.choice, computer.choice);
+                if (win) {
+                    counter.setWin(counter.getWin() + 1);
+                    counter.setCount(counter.getCount()+1);
+                    System.out.println("User Win");
+                } else {
+                    counter.setLose(counter.getLose() + 1);
+                    counter.setCount(counter.getCount()+1);
+                    System.out.println("User Lose");
+                }
+            }
+            counter.printResult();
+            askChoice(i);
 
+
+        }catch (EndGameException e){
+            System.out.println("Game is finished!");
         }catch (ExceptionInInitializerError | Exception e){
             System.out.println(e.getMessage());
             askChoice(i);

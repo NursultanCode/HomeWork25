@@ -2,22 +2,27 @@ public class Player {
     Choice choice;
 
     public Player(int i) {
-        switch (i){
-            case 1:
+        switch (i) {
+            case 1 -> {
                 choice = Choice.ROCK;
-                break;
-            case 2:
+                System.out.println("Player choose Rock!");
+            }
+            case 2 -> {
                 choice = Choice.SCISSORS;
-                break;
-            case 3:
+                System.out.println("Player choose Scissors!");
+            }
+            case 3 -> {
                 choice = Choice.PAPER;
-                break;
-            case 4:
+                System.out.println("Player choose Paper!");
+            }
+            case 4 -> {
                 choice = Choice.SPOCK;
-                break;
-            case 5:
+                System.out.println("Player choose Spock!");
+            }
+            case 5 -> {
                 choice = Choice.LIZARD;
-                break;
+                System.out.println("Player choose Lizard!");
+            }
         }
     }
 }
