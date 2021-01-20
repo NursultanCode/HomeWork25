@@ -1,6 +1,10 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Game {
+    Player player;
+    Computer computer;
+    Counter counter;
     static ArrayList<Choice> rockWins = new ArrayList<>();
     static ArrayList<Choice> paperWins = new ArrayList<>();
     static ArrayList<Choice> scissorsWins = new ArrayList<>();
@@ -18,6 +22,7 @@ public class Game {
         spockWins.add(Choice.ROCK);
         lizardWins.add(Choice.SPOCK);
         lizardWins.add(Choice.PAPER);
+        counter = new Counter();
     }
 
     public static boolean getWinner(Choice playerChoice, Choice compChoice){
@@ -39,5 +44,53 @@ public class Game {
             }
         }
         return false;
+    }
+
+    public void startGame() {
+        System.out.println("You are starting Game! Good Luck");
+        askOperation();
+    }
+
+    private void askOperation() {
+        try {
+            System.out.println("Which game you want to play?");
+            System.out.println("1 - simple Game, 2 - difficult game");
+            Scanner scanner = new Scanner(System.in);
+            String a = scanner.next();
+            int n = Integer.parseInt(a);
+            if (n<1 || n>2) throw new Exception("Incorrect input!");
+            askChoice(n);
+        }catch (ExceptionInInitializerError | Exception e){
+            System.out.println(e.getMessage());
+            askOperation();
+        }
+
+    }
+
+    private void askChoice(int i) {
+        try {
+            int max;
+            if (i == 1){
+                max = 3;
+                System.out.println("Enter your choice");
+                System.out.println("1-Rock, 2-Scissors, 3-Paper");
+            }else{
+                System.out.println("Enter your choice");
+                System.out.println("1-Rock, 2-Scissors, 3-Paper, 4-Spock, 5-Lizard");
+                max = 5;
+            }
+            Scanner scanner = new Scanner(System.in);
+            String a = scanner.next();
+            int n = Integer.parseInt(a);
+            if (n<1 || n>max) throw new Exception("Incorrect input!");
+            player = new Player(n);
+            computer = new Computer(max);
+
+        }catch (ExceptionInInitializerError | Exception e){
+            System.out.println(e.getMessage());
+            askChoice(i);
+        }
+    }
+    public class EndGameException extends Exception{
     }
 }
